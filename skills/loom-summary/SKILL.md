@@ -20,11 +20,27 @@ If `$ARGUMENTS` is empty, ask the user to paste their Loom transcript and wait f
 Analyze the transcript and produce:
 
 ### Video Summary
+
 - 1–2 sentences, no more than 140 characters
 - Captures the primary purpose or outcome of the video
 
 ### Chapter Markers
-- 3–5 markers in chronological order
+
+**Step 1 — Estimate video duration:**
+
+- If the transcript contains timestamps, use the last timestamp as the duration
+- Otherwise, estimate from word count at ~150 words/minute speaking rate
+
+**Step 2 — Determine chapter count from duration:**
+
+- Under 1 minute → 2 chapters
+- 1–3 minutes → 3 chapters
+- 3–5 minutes → 4 chapters
+- Over 5 minutes → 5 chapters
+- Hard bounds: never fewer than 2, never more than 5
+
+**Step 3 — Generate markers:**
+
 - Each marker: 3–5 words
 - Format: `mm:ss Description`
 - First marker MUST be `00:00`
@@ -39,7 +55,6 @@ Format the output exactly as:
 Summary: <summary>
 
 Chapters:
-mm:ss Description
 mm:ss Description
 mm:ss Description
 ```
