@@ -11,7 +11,7 @@ Paste a Loom transcript and get a video summary + chapter markers copied to your
 ## Install
 
 ```bash
-./install.sh
+./install.rb
 ```
 
 This symlinks the skill into `~/.claude/commands/` so it's available as a slash command in Claude Code.
@@ -19,7 +19,7 @@ This symlinks the skill into `~/.claude/commands/` so it's available as a slash 
 To remove:
 
 ```bash
-./install.sh --uninstall
+./install.rb --uninstall
 ```
 
 ## Usage
