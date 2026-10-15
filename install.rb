@@ -4,30 +4,41 @@
 require "fileutils"
 
 SCRIPT_DIR = __dir__
-COMMANDS_DIR = File.join(Dir.home, ".claude", "commands")
 SKILLS = ["loom-summary"].freeze
 
-def uninstall(commands_dir: COMMANDS_DIR)
-  SKILLS.each do |skill|
-    target = File.join(commands_dir, "#{skill}.md")
+# Target directories for Claude Code and Pi
+TARGET_DIRS = [
+  File.join(Dir.home, ".claude", "commands"),
+  File.join(Dir.home, ".agents", "skills", "loom-summary"),
+  File.join(Dir.home, ".pi", "agent", "skills", "loom-summary")
+].freeze
+
+def uninstall
+  TARGET_DIRS.each do |dir|
+    target = if dir.end_with?("loom-summary")
+      File.join(dir, "SKILL.md")
+    else
+      File.join(dir, "loom-summary.md")
+    end
     if File.symlink?(target)
       File.unlink(target)
       puts "Removed #{target}"
-    else
-      puts "No symlink found for #{skill}"
     end
   end
   puts "Uninstall complete."
 end
 
-def install(script_dir: SCRIPT_DIR, commands_dir: COMMANDS_DIR)
-  FileUtils.mkdir_p(commands_dir)
+def install
   SKILLS.each do |skill|
-    source = File.join(script_dir, "skills", skill, "SKILL.md")
-    target = File.join(commands_dir, "#{skill}.md")
-    File.unlink(target) if File.symlink?(target)
-    File.symlink(source, target)
-    puts "Linked #{target} -> #{source}"
+    source = File.join(SCRIPT_DIR, "skills", skill, "SKILL.md")
+    TARGET_DIRS.each do |dir|
+      FileUtils.mkdir_p(dir)
+      is_pi = dir.end_with?("loom-summary")
+      target = File.join(dir, is_pi ? "SKILL.md" : "#{skill}.md")
+      File.unlink(target) if File.symlink?(target)
+      File.symlink(source, target)
+      puts "Linked #{target} -> #{source}"
+    end
   end
   puts "Install complete."
 end

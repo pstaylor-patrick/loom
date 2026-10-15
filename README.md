@@ -1,6 +1,6 @@
 # loom-skills
 
-Claude Code slash commands for working with Loom videos.
+Slash commands for working with Loom videos. Works in Claude Code and Pi.
 
 ## Skills
 
@@ -14,7 +14,10 @@ Paste a Loom transcript and get a video summary + chapter markers copied to your
 ./install.rb
 ```
 
-This symlinks the skill into `~/.claude/commands/` so it's available as a slash command in Claude Code.
+Creates symlinks in:
+
+- Claude Code: `~/.claude/commands/loom-summary.md`
+- Pi: `~/.agents/skills/loom-summary/SKILL.md` and `~/.pi/agent/skills/loom-summary/SKILL.md`
 
 To remove:
 
@@ -24,10 +27,16 @@ To remove:
 
 ## Usage
 
-In a Claude Code session:
+Claude Code:
 
 ```
 /loom-summary <paste your Loom transcript here>
+```
+
+Pi:
+
+```
+/skill:loom-summary <paste your Loom transcript here>
 ```
 
 ### Example output

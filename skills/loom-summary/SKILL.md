@@ -11,9 +11,14 @@ Generate a concise video summary and chapter markers from a pasted Loom transcri
 
 ## Phase 1 — Receive Input
 
-If `$ARGUMENTS` contains a pasted transcript, proceed to Phase 2.
+Extract transcript from input:
 
-If `$ARGUMENTS` is empty, ask the user to paste their Loom transcript and wait for their response before continuing.
+- Claude Code: use `$ARGUMENTS`
+- Pi: text after `User:` marker
+
+If transcript found, proceed to Phase 2.
+
+If no transcript provided, ask the user to paste their Loom transcript.
 
 ## Phase 2 — Generate Summary & Chapters
 
