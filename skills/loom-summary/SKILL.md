@@ -26,7 +26,7 @@ Analyze the transcript and produce:
 
 ### Video Summary
 
-- 1–2 sentences, no more than 140 characters
+- 1-2 sentences, no more than 140 characters
 - Captures the primary purpose or outcome of the video
 
 ### Chapter Markers

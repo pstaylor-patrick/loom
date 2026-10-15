@@ -6,20 +6,19 @@ require "fileutils"
 SCRIPT_DIR = __dir__
 SKILLS = ["loom-summary"].freeze
 
-# Target directories for Claude Code and Pi
 TARGET_DIRS = [
   File.join(Dir.home, ".claude", "commands"),
   File.join(Dir.home, ".agents", "skills", "loom-summary"),
   File.join(Dir.home, ".pi", "agent", "skills", "loom-summary")
 ].freeze
 
+def pi_dir?(dir)
+  dir.end_with?("loom-summary")
+end
+
 def uninstall
   TARGET_DIRS.each do |dir|
-    target = if dir.end_with?("loom-summary")
-      File.join(dir, "SKILL.md")
-    else
-      File.join(dir, "loom-summary.md")
-    end
+    target = File.join(dir, pi_dir?(dir) ? "SKILL.md" : "loom-summary.md")
     if File.symlink?(target)
       File.unlink(target)
       puts "Removed #{target}"
@@ -33,8 +32,7 @@ def install
     source = File.join(SCRIPT_DIR, "skills", skill, "SKILL.md")
     TARGET_DIRS.each do |dir|
       FileUtils.mkdir_p(dir)
-      is_pi = dir.end_with?("loom-summary")
-      target = File.join(dir, is_pi ? "SKILL.md" : "#{skill}.md")
+      target = File.join(dir, pi_dir?(dir) ? "SKILL.md" : "#{skill}.md")
       File.unlink(target) if File.symlink?(target)
       File.symlink(source, target)
       puts "Linked #{target} -> #{source}"
